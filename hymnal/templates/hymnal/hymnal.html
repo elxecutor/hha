@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>American Baptist Church - Hymnal</title>
+{% endblock %}
+{% block content %}
+<section class="page-header page-header--events">
+    <div class="gradient-overlay"></div>
+    <div class="row page-header__content">
+        <div class="column">
+            <h1>Hymnal</h1>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="row">
+        <div class="column large-full">
+            <!-- Search Form -->
+            <div class="hymnal-search">
+                <h2 class="subhead">Find a Hymn</h2>
+                <form method="post" action="{% url 'hymnal:search' %}">
+                    {% csrf_token %}
+                    <div>
+                        <input class="h-full-width" type="text"
+                               name="hymn_title"
+                               id="hymn_title"
+                               value="{{ search_query }}"
+                               placeholder="Enter hymn title"
+                               required>
+                    </div>
+                    <input class="btn btn--primary h-full-width" type="submit" value="Search Hymns">
+                </form>
+            </div>
+
+            <!-- Hymn Display -->
+            {% if hymn_text %}
+                <div class="hymnal-display">
+                    <div class="hymnal-header">
+                        <h2 class="display-1">{{ hymn_title|title }}</h2>
+                    </div>
+
+                    <div class="hymnal-content">
+                        <pre>{% for verse in hymn_text %}{{ verse }}
+
+{% endfor %}</pre>
+                    </div>
+
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

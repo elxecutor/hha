@@ -1,9 +1,7 @@
-import uuid
-from datetime import timedelta, datetime
+from datetime import datetime
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
-from demographic.models import Demographic
 import recurrence.fields  # django-recurrence
 
 class Event(models.Model):
@@ -41,13 +39,13 @@ class Event(models.Model):
         )
     )
     description = models.TextField(blank=True, null=True)
+    start_date = models.DateField(help_text='Start date of the event.', default=timezone.now)
     # Use django-recurrence for repeat rules.
     recurrence = recurrence.fields.RecurrenceField(
         null=True,
         blank=True,
         help_text="Set recurrence rules for the event. Leave empty for one-time events."
     )
-    demographic = models.ForeignKey(Demographic, on_delete=models.CASCADE, blank=True, null=True)
     start_time = models.TimeField(help_text='Start time of the event.', default=timezone.now)
     end_time = models.TimeField(help_text='End time of the event.', default=timezone.now)
     location = models.CharField(max_length=200, help_text='Location of the event.')
@@ -57,6 +55,8 @@ class Event(models.Model):
         null=True,
         help_text='Keep this space empty until the live link is obtained.'
     )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def delete(self, *args, **kwargs):
         if self.image:
@@ -77,13 +77,18 @@ class Event(models.Model):
         recurrence field; for one-time events, returns the start_date if it lies within the range.
         """       
         if self.recurrence:
+            dtstart = timezone.make_aware(datetime.combine(self.start_date, self.start_time))
             return self.recurrence.between(
                 range_start,
                 range_end,
-                dtstart=range_start,
-                # inc=True
+                dtstart=dtstart,
+                inc=True
             )
-        return []
+        else:
+            event_datetime = timezone.make_aware(datetime.combine(self.start_date, self.start_time))
+            if range_start <= event_datetime <= range_end:
+                return [event_datetime]
+            return []
 
     def get_paragraphs(self):
         return self.description.split('\r\n\r\n\r\n') if self.description else []
@@ -96,38 +101,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-class Registration(models.Model):
-    name = models.CharField(max_length=100)
-    unique_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    phone_number = models.CharField(max_length=20)
-    email = models.EmailField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    date = models.DateField(default=timezone.now)
-    proof = models.ImageField(upload_to='registration/', blank=True)
-    comment = models.TextField()
-    confirmed = models.BooleanField(default=False)
-
-    def delete(self, *args, **kwargs):
-        if self.proof:
-            storage, path = self.proof.storage, self.proof.path
-            storage.delete(path)
-        super().delete(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.name} - {self.event.name}"
-
-class QRCodeToken(models.Model):
-    user = models.ForeignKey(Registration, on_delete=models.CASCADE)
-    token = models.CharField(max_length=50, unique=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    used = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.user.name
-
-    def is_valid(self):
-        return (
-            not self.used and
-            (self.created_at + timedelta(hours=24)) >= timezone.now().astimezone(timezone.get_current_timezone())
-        )

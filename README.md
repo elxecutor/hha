@@ -1,6 +1,6 @@
-# HHA
+# KCA
 
-HHA is a Django-based web application designed to manage events, demographics, and ministries for a Church body. It streamlines event management and user registration while providing a comprehensive platform for organizational activities.
+KCA is a Django-based web application designed to manage events, demographics, and ministries for a Church body. It streamlines event management and user registration while providing a comprehensive platform for organizational activities.
 
 ---
 
@@ -41,7 +41,7 @@ HHA is a Django-based web application designed to manage events, demographics, a
 
 ```bash
 git clone https://github.com/noiz-x/hha.git
-cd hha
+cd kca
 ```
 
 ### Create and Activate a Virtual Environment

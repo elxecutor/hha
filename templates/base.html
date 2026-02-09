@@ -9,7 +9,7 @@
     <meta property="og:title" content="American Baptist Church">
     <meta property="og:type" content="website">
     <meta property="og:description" content="Welcome to American Baptist Church. Join us in worship and fellowship as we strive to spread the love of Christ in our community. Discover our vibrant church family and get involved in our various ministries and events." />
-    <meta property="og:url" content="https://hha.pythonanywhere.com">
+    <meta property="og:url" content="https://kca.pythonanywhere.com">
     <meta property="og:image" content="{% static 'images/logo.svg' %}">
     <meta property="og:image:type" content="image/svg+xml">
     <meta name="keywords" content="American Baptist Church, Christian church, worship, fellowship, community, ministries, events, faith, spirituality" />
@@ -35,17 +35,16 @@
     </div>
     <header class="s-header">
         <div class="header-logo">
-            <a class="site-logo" href="{% url 'core:home' %}">
+            <a class="site-logo" href="{% url 'core:index' %}">
                 <img src="{% static 'images/logo.svg' %}" alt="RCCG Logo">
             </a>
         </div>
         <nav class="header-nav-wrap">
             <ul class="header-nav">
-                <li class="current"><a href="{% url 'core:home' %}" title="Home">Home</a></li>
-                <li><a href="{% url 'core:about' %}" title="About Us">About Us</a></li>
-                <li><a href="{% url 'ministries:home' %}" title="Departments">Departments</a></li>
-                <li><a href="{% url 'demographic:home' %}" title="Groups">Connect Groups</a></li>
+                <li class="current"><a href="{% url 'core:index' %}" title="Home">Home</a></li>
+                <li><a href="{% url 'core:contact' %}" title="About Us">About Us</a></li>
                 <li><a href="{% url 'events:home' %}" title="Upcoming Events">Upcoming Events</a></li>
+                <li><a href="{% url 'hymnal:home' %}" title="Hymnal">Hymnal</a></li>
                 <li><a href="{% url 'core:giving' %}" title="Online Giving">Online Giving</a></li>
                 <li><a href="{% url 'core:contact' %}" title="Contact Us">Contact Us</a></li>
             </ul>
@@ -90,7 +89,7 @@
         <div class="row footer-top">
             <div class="column large-4 medium-5 tab-full">
                 <div class="footer-logo">
-                    <a class="site-footer-logo" href="{% url 'core:home' %}">
+                    <a class="site-footer-logo" href="{% url 'core:index' %}">
                         <img src="{% static 'images/logo.svg' %}" alt="RCCG Logo">
                     </a>
                 </div>
@@ -116,11 +115,10 @@
                     <div class="column large-5 medium-full">
                         <h4 class="h6">Quick Links</h4>
                         <ul class="footer-list">
-                            <li><a href="{% url 'core:home' %}">Home</a></li>
-                            <li><a href="{% url 'core:about' %}">About Us</a></li>
-                            <li><a href="{% url 'ministries:home' %}">Departments</a></li>
-                            <li><a href="{% url 'demographic:home' %}">Connect Groups</a></li>
-                            <li><a href="{% url 'events:all_events' %}">All Events</a></li>
+                            <li><a href="{% url 'core:index' %}">Home</a></li>
+                            <li><a href="{% url 'core:contact' %}">About Us</a></li>
+                            <li><a href="{% url 'events:home' %}">All Events</a></li>
+                            <li><a href="{% url 'hymnal:home' %}">Hymnal</a></li>
                             <li><a href="{% url 'core:giving' %}" title="Online Giving">Online Giving</a></li>
                             <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
                         </ul>
@@ -131,7 +129,7 @@
         <div class="row footer-bottom">
             <div class="column ss-copyright">
                 <span>© {% now "Y" %} American Baptist Church. All rights reserved.</span>
-                <span>Design by Retr0</span>
+                <span>Design by elxecutor</span>
             </div>
         </div>
         <div class="ss-go-top">
