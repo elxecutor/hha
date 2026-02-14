@@ -1,11 +1,13 @@
 from django.contrib import admin
 from events.models import Event
+from django.utils import timezone
+from datetime import timedelta
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'start_date', 'start_time', 'end_time', 'location', 'is_special', 'recurrence', 'get_upcoming_occurrences')
+    list_display = ('name', 'start_date', 'start_time', 'end_time', 'location', 'is_special', 'get_upcoming_occurrences')
     list_filter = ('is_special', 'start_date', 'location', 'recurrence')
-    search_fields = ('name', 'description', 'location', 'speakers')
+    search_fields = ('name', 'description', 'location')
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ('slug',)
     list_per_page = 20
@@ -14,7 +16,7 @@ class EventAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug', 'description', 'start_date', 'start_time', 'end_time', 'location', 'image', 'link')
+            'fields': ('name', 'slug', 'description', 'start_date', 'start_time', 'end_time', 'location', 'image')
         }),
         ('Recurrence', {
             'fields': ('recurrence',),
@@ -22,7 +24,7 @@ class EventAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
         ('Special Event Options', {
-            'fields': ('is_special', 'rsvp_form_needed', 'payment_upload_needed', 'speakers', 'hashtags'),
+            'fields': ('is_special',),
             'classes': ('collapse',),
         }),
     )

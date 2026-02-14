@@ -33,11 +33,6 @@
                 <ul class="events-list__meta">
                     <li class="events-list__meta-date">
                         {{ occ.date|date:"l, F j, Y" }}
-                        {% if occ.days_until == 0 %}
-                            <span class="event-status event-today">Today!</span>
-                        {% elif occ.days_until == 1 %}
-                            <span class="event-status event-tomorrow">Tomorrow</span>
-                        {% endif %}
                     </li>
                     <li class="events-list__meta-time">
                         {{ occ.event.start_time|time:"g:i A" }} - {{ occ.event.end_time|time:"g:i A" }}
@@ -45,21 +40,6 @@
                     <li class="events-list__meta-location">
                         {{ occ.event.location }}
                     </li>
-                    {% if occ.event.is_special %}
-                        {% if occ.event.speakers %}
-                            <li class="events-list__meta-speaker">
-                                {{ occ.event.speakers|truncatechars:35 }}
-                            </li>
-                        {% endif %}
-                        {% if occ.event.hashtags %}
-                            <li class="events-list__meta-hashtags">
-                                {{ occ.event.hashtags|truncatechars:45 }}
-                            </li>
-                        {% endif %}
-                        <li class="events-list__meta-special">
-                            ⭐ Special Event
-                        </li>
-                    {% endif %}
                 </ul>
             </div>
         {% empty %}

@@ -32,9 +32,7 @@ class Command(BaseCommand):
             start_time=time(9, 0),
             end_time=time(15, 0),
             location='Community Center',
-            is_special=True,
-            speakers='Pastor John, Community Leaders',
-            hashtags='#Outreach #Community #Service'
+            is_special=True
         )
         self.stdout.write(f'Created: {special_event.name}')
 
@@ -59,9 +57,7 @@ class Command(BaseCommand):
             end_time=time(21, 0),
             location='Main Sanctuary',
             is_special=True,
-            recurrence=Recurrence(rrules=[recurrence.Rule(freq=recurrence.YEARLY, bymonth=12, bymonthday=25)]),
-            speakers='Pastor John, Choir',
-            hashtags='#Christmas #Jesus #Celebration'
+            recurrence=Recurrence(rrules=[recurrence.Rule(freq=recurrence.YEARLY, bymonth=12, bymonthday=25)])
         )
         self.stdout.write(f'Created: {christmas_event.name}')
 

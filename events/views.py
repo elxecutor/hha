@@ -3,25 +3,12 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.utils import timezone
 from events.models import Event
+from events.utils import get_upcoming_occurrences
 
 
 def home(request):
-    now = timezone.now()
-    today = now.date()
-    two_months_later = now + timedelta(days=60)
-    
-    # Retrieve all events (unchanged, but you can add filtering if needed)
-    events = Event.objects.all().order_by('start_time')
-    
-    # Build a list of upcoming occurrences using list comprehension
-    upcoming_occurrences = sorted(
-        [
-            {'event': evt, 'date': occ.date(), 'days_until': (occ.date() - today).days}
-            for evt in events
-            for occ in evt.get_occurrences(now, two_months_later)
-        ],
-        key=lambda x: (x['date'], x['event'].start_time)
-    )
+    # Get upcoming occurrences
+    upcoming_occurrences = get_upcoming_occurrences(days_ahead=60)
 
     # Simple pagination with fixed page size of 6
     paginator = Paginator(upcoming_occurrences, 6)

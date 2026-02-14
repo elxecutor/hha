@@ -73,13 +73,6 @@ Create a `.env` file in the project root directory with the following environmen
 SECRET_KEY=your_secret_key
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
-
-# Email settings
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=465
-EMAIL_HOST_USER=your_email@example.com
-EMAIL_HOST_PASSWORD=your_email_password
-EMAIL_USE_TLS=True
 ```
 
 ---
