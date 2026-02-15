@@ -1,8 +1,5 @@
 Django==6.0.2
-djangorestframework>=3.15,<4.0
-django-environ>=0.12,<1.0
-Pillow>=10.0,<11.0
-qrcode>=7.0,<8.0
 django-recurrence>=1.11,<2.0
 python-dotenv>=1.0,<2.0
 requests>=2.0,<3.0
+Pillow>=10.0,<11.0
