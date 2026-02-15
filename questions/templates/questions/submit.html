@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>RCCG KCA - Ask a Question</title>
+{% endblock %}
+
+{% block content %}
+<section class="page-header page-header--contact">
+    <div class="gradient-overlay"></div>
+    <div class="row page-header__content">
+        <div class="column">
+            <h1>Ask a Question</h1>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="row">
+        <div class="column">
+            <p class="lead drop-cap">
+                Have a question about faith, our church, or anything else? We welcome your inquiries and are here to help.
+                Feel free to ask anything that's on your mind - no question is too small or too big.
+            </p>
+            <p>
+                Whether you're seeking spiritual guidance, information about our services and events,
+                or just want to learn more about our community, we're here to provide answers and support.
+                Your questions help us serve you better and strengthen our fellowship together.
+            </p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <div class="alert-box alert-box--success hideit">
+                            <p><strong>Success!</strong> {{ message }}</p>
+                            <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                        </div>
+                    {% elif message.tags == 'error' %}
+                        <div class="alert-box alert-box--error hideit">
+                            <p><strong>Error!</strong> {{ message }}</p>
+                            <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if form.errors %}
+                <div class="alert-box alert-box--error hideit">
+                    <p><strong>Error!</strong> Please fix the following errors:</p>
+                    <ul>
+                        {% for error in form.errors.values %}
+                            <li>{{ error|striptags }}</li>
+                        {% endfor %}
+                    </ul>
+                    <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                </div>
+            {% endif %}
+
+            <h2>Submit Your Question</h2>
+            <div class="question-form-container">
+                <form name="questionForm" id="questionForm" method="post" action="" autocomplete="off">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="message form-field">
+                            {{ form.question_text }}
+                        </div>
+                        <br>
+                        <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large h-full-width" value="Submit Question" type="submit">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

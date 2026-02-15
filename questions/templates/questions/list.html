@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>RCCG KCA - Question Bank</title>
+{% endblock %}
+
+{% block content %}
+<section class="page-header page-header--contact">
+    <div class="gradient-overlay"></div>
+    <div class="row page-header__content">
+        <div class="column">
+            <h1>Question Bank</h1>
+            <p>Review and manage submitted questions.</p>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="row">
+        <div class="column">
+            {% if questions %}
+                <div class="row add-bottom">
+                    <div class="column large-full">
+                        <h1 class="display-1">Question Bank</h1>
+                        <p class="lead">Review and manage submitted questions from our community.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="column large-full">
+                        <h3>All Questions ({{ questions.paginator.count }})</h3>
+                    </div>
+                </div>
+
+                {% for question in questions %}
+                    <div class="row question-item">
+                        <div class="column large-full">
+                            <blockquote>
+                                <p>{{ question.question_text|linebreaks }}</p>
+                                <cite>
+                                    Submitted on {{ question.created_at|date:"M j, Y g:i A" }}
+                                </cite>
+                            </blockquote>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% if questions.has_other_pages %}
+                    <div class="row add-bottom">
+                        <div class="column large-full">
+                            <div class="pagination">
+                                {% if questions.has_previous %}
+                                    <a href="?page={{ questions.previous_page_number }}" class="btn btn--secondary">&laquo; Previous</a>
+                                {% endif %}
+
+                                <span class="page-info">
+                                    Page {{ questions.number }} of {{ questions.paginator.num_pages }}
+                                </span>
+
+                                {% if questions.has_next %}
+                                    <a href="?page={{ questions.next_page_number }}" class="btn btn--secondary">Next &raquo;</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="row">
+                    <div class="column large-full">
+                        <h1 class="display-1">Question Bank</h1>
+                        <p class="lead">Review and manage submitted questions from our community.</p>
+
+                        <div class="alert-box alert-box--info">
+                            <p><strong>No Questions Yet</strong> - No questions have been submitted yet. Check back later!</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

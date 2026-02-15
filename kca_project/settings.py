@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'events',
     'core',
     'hymnal',
+    'questions',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
